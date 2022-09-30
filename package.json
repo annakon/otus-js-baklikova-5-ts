@@ -1,0 +1,28 @@
+{
+  "name": "otus-js-baklikova-5-ts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/annakon/otus-js-baklikova-5-ts.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/annakon/otus-js-baklikova-5-ts/issues"
+  },
+  "homepage": "https://github.com/annakon/otus-js-baklikova-5-ts#readme",
+  "devDependencies": {
+    "@babel/core": "^7.19.3",
+    "@babel/preset-env": "^7.19.3",
+    "@types/jest": "^29.1.1",
+    "babel-jest": "^29.1.2",
+    "jest": "^29.1.2",
+    "jest-environment-jsdom": "^29.1.2"
+  }
+}
