@@ -6,10 +6,14 @@ module.exports = {
   },
   extends: ["standard-with-typescript", "prettier"],
   overrides: [],
-  plugins: ["jest"],
+  plugins: ["jest", "@typescript-eslint"],
   parserOptions: {
     ecmaVersion: "latest",
     sourceType: "module",
   },
-  rules: {},
+  rules: {
+    "import/no-unresolved": "off", // https://github.com/typescript-eslint/typescript-eslint/issues/1624
+    "import/extensions": ["warn", "never"], // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/extensions.md
+  },
+  parser: "@typescript-eslint/parser",
 };

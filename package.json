@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "lint": "prettier --check . && eslint .",
-    "lint:fix": "prettier --write . && eslint . --fix",
+    "lint": "prettier --check . && eslint . src --ext .js,.ts",
+    "lint:fix": "prettier --write . && eslint . --fix src --ext .js,.ts",
     "prepare": "husky install"
   },
   "repository": {
@@ -24,7 +24,8 @@
     "@babel/core": "^7.19.3",
     "@babel/preset-env": "^7.19.3",
     "@types/jest": "^29.1.1",
-    "@typescript-eslint/eslint-plugin": "^5.38.1",
+    "@typescript-eslint/eslint-plugin": "^5.39.0",
+    "@typescript-eslint/parser": "^5.39.0",
     "babel-jest": "^29.1.2",
     "babel-loader": "^8.2.5",
     "css-loader": "^6.7.1",
