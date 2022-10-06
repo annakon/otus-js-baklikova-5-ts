@@ -6,7 +6,7 @@ const { resolve } = require("node:path");
 const mode = process.env.NODE_ENV;
 
 module.exports = {
-  entry: { main: "./src/index.js" },
+  entry: { main: "./src/index.ts" },
   output: {
     path: resolve(__dirname, "dist"),
     filename: "bundle.js",
@@ -17,10 +17,13 @@ module.exports = {
     // assetModuleFilename: 'images/[name][ext]'
   },
   devtool: mode === "development" ? "eval-source-map" : "source-map",
+  resolve: {
+    extensions: [".js", ".ts"],
+  },
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.(ts|js)$/,
         exclude: /(node_modules)/,
         use: {
           loader: "babel-loader",
