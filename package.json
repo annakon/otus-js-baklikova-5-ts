@@ -7,7 +7,8 @@
     "test": "jest",
     "lint": "prettier --check . && eslint . src --ext .js,.ts",
     "lint:fix": "prettier --write . && eslint . --fix src --ext .js,.ts",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "typecheck": "npx tsc --noemit"
   },
   "repository": {
     "type": "git",
