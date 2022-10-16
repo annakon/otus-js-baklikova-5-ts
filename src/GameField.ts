@@ -4,7 +4,7 @@ export interface IGameField {
   getState(): Cell[][];
   toggleCellState(x: number, y: number);
   nextGeneration();
-  setSize(width: number, height: number);
+  setSize(width: number, height: number) : void;
 }
 
 export class GameField implements IGameField {

@@ -17,7 +17,7 @@ describe("GameField", () => {
   describe("functional tests", () => {
     const width = 2;
     const height = 3;
-    let gameField;
+    let gameField: GameField;
     beforeEach(() => {
       gameField = new GameField(width, height);
     });
