@@ -20,7 +20,36 @@ export class GameField implements IGameField {
     }
   }
 
-  nextGeneration() {}
+   getAliveCellCount(x: number,y: number): number{
+    let count: number=0;
+    for (let row = y-1; row <= y+1; row++) {
+      for (let col = x-1; col <= x+1; col++) {
+        if(col!==row && this.field[row]?.[col]===1) {
+          count++;
+        }
+      }
+    }
+    /*if(this.field[y-1][x]===1){
+      count++;
+    }*/
+    return count;
+  }
+
+  nextGeneration() {
+
+    for (let row = 0; row < this.field.length; row++) {
+      for (let col = 0; col < this.field[row].length; col++) {
+        let ACount: number=this.getAliveCellCount(col,row);
+
+        if(ACount===3 && this.field[row][col] === 0){
+          this.field[row][col]=1;
+        }
+        if(ACount !== 3 && ACount !== 2  && this.field[row][col] === 1) {
+            this.field[row][col]=0;
+          }
+      }
+    }
+  }
 
   getState() {
     return this.field;
