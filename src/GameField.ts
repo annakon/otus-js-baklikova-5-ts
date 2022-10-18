@@ -2,17 +2,17 @@ import { Cell } from "./types/Cell";
 
 export interface IGameField {
   getState(): Cell[][];
-  toggleCellState(x: number, y: number);
-  nextGeneration();
+  toggleCellState(x: number, y: number): void;
+  nextGeneration(): void;
   setSize(width: number, height: number) : void;
 }
 
 export class GameField implements IGameField {
-  field: Cell[][];
+  field: Cell[][]=[];
   constructor(width: number = 0, height: number = 1) {
     let field = [];
     for (let row = 0; row < height; row++) {
-      field[row] = [];
+      field[row] = new Array();
       for (let col = 0; col < width; col++) {
         field[row][col] = 0;
       }
@@ -35,7 +35,8 @@ export class GameField implements IGameField {
   }
 
   setSize(width: number, height: number) {
-    let newField = [];
+    let newField : Cell[][] = [];
+
 
     for (let row = 0; row < height; row++) {
       newField.push([]);
