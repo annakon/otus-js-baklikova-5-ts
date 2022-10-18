@@ -3,7 +3,7 @@ import { GameView } from "./GameView";
 describe.skip("GameView", () => {
   let el: HTMLElement;
   beforeEach(() => {
-    el = document.createElement("div");
+    el = document.createElement("div") as HTMLDivElement;
   });
   describe("public interface", () => {
     it("is a class", () => {
@@ -62,7 +62,7 @@ describe.skip("GameView", () => {
         [0, 0],
         [1, 0]
       ]);
-      el.querySelector(".cell.cell--alive").dispatchEvent(
+      (el.querySelector(".cell.cell--alive") as HTMLElement).dispatchEvent(
         new Event("click", {
           bubbles: true
         })
@@ -80,12 +80,12 @@ describe.skip("GameView", () => {
         el.querySelector(".run-button.run-button--stopped")
       ).not.toBeNull();
       expect(
-        el.querySelector(".run-button.run-button--stopped").innerHTML
+          (el.querySelector(".run-button.run-button--stopped")  as HTMLElement).innerHTML
       ).toBe("Play");
       gameView.updateGameState({ isRunning: true, width: 3, height: 3 });
       expect(el.querySelector(".run-button.run-button--stopped")).toBeNull();
       expect(el.querySelector(".run-button.run-button--runned")).not.toBeNull();
-      expect(el.querySelector(".run-button.run-button--runned").innerHTML).toBe(
+      expect((el.querySelector(".run-button.run-button--runned") as HTMLElement).innerHTML).toBe(
         "Stop"
       );
       expect(
@@ -107,7 +107,7 @@ describe.skip("GameView", () => {
         el.querySelector(".run-button.run-button--stopped")
       ).not.toBeNull();
       expect(
-        el.querySelector(".run-button.run-button--stopped").innerHTML
+          (el.querySelector(".run-button.run-button--stopped")  as HTMLElement).innerHTML
       ).toBe("Play");
       expect(
         Number(
@@ -128,14 +128,14 @@ describe.skip("GameView", () => {
       const onGameStateChange = jest.fn();
       gameView.onGameStateChange(onGameStateChange);
       gameView.updateGameState({ isRunning: true, width: 2, height: 1 });
-      el.querySelector(".run-button.run-button--runned").dispatchEvent(
+      (el.querySelector(".run-button.run-button--runned")  as HTMLElement).dispatchEvent(
         new Event("click", {
           bubbles: true
         })
       );
       expect(onGameStateChange).toHaveBeenCalledWith(false);
       gameView.updateGameState({ isRunning: false, width: 2, height: 1 });
-      el.querySelector(".run-button.run-button--stopped").dispatchEvent(
+      (el.querySelector(".run-button.run-button--stopped")  as HTMLElement).dispatchEvent(
         new Event("click", {
           bubbles: true
         })
