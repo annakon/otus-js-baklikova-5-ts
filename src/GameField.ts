@@ -24,14 +24,11 @@ export class GameField implements IGameField {
     let count: number=0;
     for (let row = y-1; row <= y+1; row++) {
       for (let col = x-1; col <= x+1; col++) {
-        if(col!==row && this.field[row]?.[col]===1) {
+        if(!(col===x && row===y) && this.field[row]?.[col]===1) {
           count++;
         }
       }
     }
-    /*if(this.field[y-1][x]===1){
-      count++;
-    }*/
     return count;
   }
 
