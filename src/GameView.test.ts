@@ -1,6 +1,6 @@
 import { GameView } from "./GameView";
 
-describe.skip("GameView", () => {
+describe("GameView", () => {
   let el: HTMLElement;
   beforeEach(() => {
     el = document.createElement("div") as HTMLDivElement;

@@ -14,8 +14,15 @@ export interface IGameView {
 }
 
 export class GameView implements IGameView {
-  constructor(el:HTMLElement) {}
-  updateGameField(field: Cell[][]){}
+  el:HTMLElement;
+  constructor(element:HTMLElement) {
+    this.el=element;
+    this.el.innerHTML="<div class='gameField'></div><div class='gameControls'></div>"
+  }
+  updateGameField(field: Cell[][]){
+    let gameField=this.el.querySelector(".gameField");
+
+  }
   updateGameState(state: {
     width?: number;
     height?: number;
