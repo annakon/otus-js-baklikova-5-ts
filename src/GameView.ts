@@ -16,6 +16,9 @@ export interface IGameView {
 export class GameView implements IGameView {
   el:HTMLElement;
   onCC: (x: number, y: number) => void;
+  state:{width?: number;
+    height?: number;
+    isRunning?: boolean;}={};
   constructor(element:HTMLElement) {
     this.el=element;
     this.el.innerHTML="<div class='gameField'></div><div class='gameControls'></div>"
@@ -25,6 +28,14 @@ export class GameView implements IGameView {
     buttonEl.innerHTML="Play";
     buttonEl.className="run-button run-button--stopped";
     gameControls.appendChild(buttonEl);
+    let input=document.createElement("input");
+    input.type="number";
+    input.className="field-size field-size--width";
+    gameControls.appendChild(input);
+    input=document.createElement("input");
+    input.type="number";
+    input.className="field-size field-size--height";
+    gameControls.appendChild(input);
   }
   updateGameField(field: Cell[][]){
     let gameField=this.el.querySelector(".gameField") as HTMLDivElement;
@@ -51,7 +62,30 @@ export class GameView implements IGameView {
     width?: number;
     height?: number;
     isRunning?: boolean;
-  }){}
+  }){
+    this.state = {
+      ...this.state,
+      ...state,
+    };
+    if(typeof this.state.width === "number") {
+      (this.el.querySelector(
+          "input[type='number'].field-size.field-size--width"
+      ) as HTMLInputElement).valueAsNumber = this.state.width as number;
+    }
+    if(typeof this.state.height === "number") {
+      (this.el.querySelector(
+          "input[type='number'].field-size.field-size--height"
+      ) as HTMLInputElement).valueAsNumber = this.state.height as number;
+    }
+    let button=this.el.querySelector(".run-button") as HTMLButtonElement;
+    if(state.isRunning){
+      button.className="run-button run-button--runned";
+      button.innerHTML="Stop";
+    }else {
+      button.className="run-button run-button--stopped";
+      button.innerHTML="Play";
+    }
+  }
   onCellClick(cb: (x: number, y: number) => void){
     this.onCC=cb;
      /*let trs=[...this.el.querySelectorAll("tr")];
