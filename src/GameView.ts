@@ -17,6 +17,7 @@ export class GameView implements IGameView {
   el:HTMLElement;
   onCC: (x: number, y: number) => void;
   onGSC: (newState: boolean) => void;
+  onFSC: (width: number, height: number) => void;
   state:{width?: number;
     height?: number;
     isRunning?: boolean;}={};
@@ -25,19 +26,24 @@ export class GameView implements IGameView {
     this.el.innerHTML="<div class='gameField'></div><div class='gameControls'></div>"
     this.onCC = (x: number, y: number) => void {};
     this.onGSC = (newState: boolean) => void {};
+    this.onFSC = (width: number, height: number) => void {};
     let gameControls=this.el.querySelector(".gameControls") as HTMLDivElement;
     let buttonEl=document.createElement("button");
     buttonEl.innerHTML="Play";
     buttonEl.className="run-button run-button--stopped";
     gameControls.appendChild(buttonEl);
-    let input=document.createElement("input");
-    input.type="number";
-    input.className="field-size field-size--width";
-    gameControls.appendChild(input);
-    input=document.createElement("input");
-    input.type="number";
-    input.className="field-size field-size--height";
-    gameControls.appendChild(input);
+    let inputW=document.createElement("input");
+    inputW.type="number";
+    inputW.className="field-size field-size--width";
+    gameControls.appendChild(inputW);
+    let inputH=document.createElement("input");
+    inputH.type="number";
+    inputH.className="field-size field-size--height";
+    gameControls.appendChild(inputH);
+    inputW.addEventListener("change",(ev) => {
+      this.onFSC(inputW.valueAsNumber as number,inputH.valueAsNumber as number)});
+    inputH.addEventListener("change",(ev) => {
+      this.onFSC(inputW.valueAsNumber as number,inputH.valueAsNumber as number)});
   }
   updateGameField(field: Cell[][]){
     let gameField=this.el.querySelector(".gameField") as HTMLDivElement;
@@ -70,14 +76,16 @@ export class GameView implements IGameView {
       ...state,
     };
     if(typeof this.state.width === "number") {
-      (this.el.querySelector(
+      let inputW=(this.el.querySelector(
           "input[type='number'].field-size.field-size--width"
-      ) as HTMLInputElement).valueAsNumber = this.state.width as number;
+      ) as HTMLInputElement)
+      inputW.valueAsNumber = this.state.width as number;
     }
     if(typeof this.state.height === "number") {
-      (this.el.querySelector(
+      let inputH=(this.el.querySelector(
           "input[type='number'].field-size.field-size--height"
-      ) as HTMLInputElement).valueAsNumber = this.state.height as number;
+      ) as HTMLInputElement)
+      inputH.valueAsNumber = this.state.height as number;
     }
     let button=this.el.querySelector(".run-button") as HTMLButtonElement;
     if(state.isRunning){
@@ -88,6 +96,7 @@ export class GameView implements IGameView {
       button.innerHTML="Play";
     }
     button.addEventListener("click",(ev) => {this.onGSC(!state.isRunning as boolean)});
+
   }
   onCellClick(cb: (x: number, y: number) => void){
     this.onCC=cb;
@@ -95,5 +104,7 @@ export class GameView implements IGameView {
   onGameStateChange(cb: (newState: boolean) => void){
     this.onGSC=cb;
   }
-  onFieldSizeChange(cb: (width: number, height: number) => void){}
+  onFieldSizeChange(cb: (width: number, height: number) => void){
+    this.onFSC=cb;
+  }
 }
