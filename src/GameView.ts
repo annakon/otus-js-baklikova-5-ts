@@ -16,6 +16,7 @@ export interface IGameView {
 export class GameView implements IGameView {
   el:HTMLElement;
   onCC: (x: number, y: number) => void;
+  onGSC: (newState: boolean) => void;
   state:{width?: number;
     height?: number;
     isRunning?: boolean;}={};
@@ -23,6 +24,7 @@ export class GameView implements IGameView {
     this.el=element;
     this.el.innerHTML="<div class='gameField'></div><div class='gameControls'></div>"
     this.onCC = (x: number, y: number) => void {};
+    this.onGSC = (newState: boolean) => void {};
     let gameControls=this.el.querySelector(".gameControls") as HTMLDivElement;
     let buttonEl=document.createElement("button");
     buttonEl.innerHTML="Play";
@@ -85,17 +87,13 @@ export class GameView implements IGameView {
       button.className="run-button run-button--stopped";
       button.innerHTML="Play";
     }
+    button.addEventListener("click",(ev) => {this.onGSC(!state.isRunning as boolean)});
   }
   onCellClick(cb: (x: number, y: number) => void){
     this.onCC=cb;
-     /*let trs=[...this.el.querySelectorAll("tr")];
-     for (let i=0;i<trs.length;i++) {
-       let tds=[...trs[i].querySelectorAll("td")];
-       for (let j=0;j<tds.length;j++) {
-         tds[j].addEventListener("click",(ev) => {cb(i,j)});
-       }
-     }*/
   }
-  onGameStateChange(cb: (newState: boolean) => void){}
+  onGameStateChange(cb: (newState: boolean) => void){
+    this.onGSC=cb;
+  }
   onFieldSizeChange(cb: (width: number, height: number) => void){}
 }
