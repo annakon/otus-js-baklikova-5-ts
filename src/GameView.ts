@@ -20,6 +20,11 @@ export class GameView implements IGameView {
     this.el=element;
     this.el.innerHTML="<div class='gameField'></div><div class='gameControls'></div>"
     this.onCC = (x: number, y: number) => void {};
+    let gameControls=this.el.querySelector(".gameControls") as HTMLDivElement;
+    let buttonEl=document.createElement("button");
+    buttonEl.innerHTML="Play";
+    buttonEl.className="run-button run-button--stopped";
+    gameControls.appendChild(buttonEl);
   }
   updateGameField(field: Cell[][]){
     let gameField=this.el.querySelector(".gameField") as HTMLDivElement;
