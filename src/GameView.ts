@@ -21,6 +21,7 @@ export class GameView implements IGameView {
   }
   updateGameField(field: Cell[][]){
     let gameField=this.el.querySelector(".gameField") as HTMLDivElement;
+    gameField.innerHTML='';
     let tableEl=document.createElement("table");
     gameField.appendChild(tableEl);
     for (let row = 0; row < field.length; row++) {
