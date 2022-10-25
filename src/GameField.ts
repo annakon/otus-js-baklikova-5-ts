@@ -12,7 +12,7 @@ export class GameField implements IGameField {
   constructor(width: number = 0, height: number = 1) {
     let field = [];
     for (let row = 0; row < height; row++) {
-      field[row] = new Array();
+      field[row] = [] as number[];
       for (let col = 0; col < width; col++) {
         field[row][col] = 0;
       }
