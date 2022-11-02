@@ -5,20 +5,20 @@ import { Cell } from "./types/Cell";
 export interface IGame {}
 
 export class Game implements IGame {
+    timerId?: NodeJS.Timer;
     constructor(gameField:IGameField, gameView:IGameView, stepDurationMs?:number){
-        let timerId: NodeJS.Timer;
         gameView.onCellClick((x: number, y: number)=>{
             gameField.toggleCellState(x,y);
             gameView.updateGameField(gameField.getState());
         });
         gameView.onGameStateChange((newState: boolean)=>{
             if(newState) {
-                timerId = setInterval(()=>{
+                this.timerId = setInterval(()=>{
                     gameField.nextGeneration();
                     gameView.updateGameField(gameField.getState());
                 }, stepDurationMs);
             } else {
-                clearInterval(timerId);
+                clearInterval(this.timerId);
             }
             gameView.updateGameState({isRunning:newState});
         });

@@ -31,6 +31,7 @@ export class GameView implements IGameView {
     let buttonEl=document.createElement("button");
     buttonEl.innerHTML="Play";
     buttonEl.className="run-button run-button--stopped";
+    buttonEl.addEventListener("click",(ev) => {this.onGSC(buttonEl.innerHTML==="Play")});
     gameControls.appendChild(buttonEl);
     let inputW=document.createElement("input");
     inputW.type="number";
@@ -95,7 +96,6 @@ export class GameView implements IGameView {
       button.className="run-button run-button--stopped";
       button.innerHTML="Play";
     }
-    button.addEventListener("click",(ev) => {this.onGSC(!state.isRunning as boolean)});
 
   }
   onCellClick(cb: (x: number, y: number) => void){
