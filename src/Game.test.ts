@@ -5,7 +5,7 @@ import { Cell } from "./types/Cell";
 
 const sleep = (x: number) => new Promise((resolve) => setTimeout(resolve, x));
 
-describe.skip("Game", () => {
+describe("Game", () => {
   let stepDurationMs = 10;
   let state: Cell[][];
   let gameField: IGameField;
