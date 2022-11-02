@@ -7,17 +7,20 @@ export interface IGame {}
 export class Game implements IGame {
     constructor(gameField:IGameField, gameView:IGameView, stepDurationMs?:number){
         let timerId: NodeJS.Timer;
-        gameView.onCellClick(gameField.toggleCellState);
+        gameView.onCellClick((x: number, y: number)=>{
+            gameField.toggleCellState(x,y);
+            gameView.updateGameField(gameField.getState());
+        });
         gameView.onGameStateChange((newState: boolean)=>{
             if(newState) {
                 timerId = setInterval(()=>{
                     gameField.nextGeneration();
                     gameView.updateGameField(gameField.getState());
-                    gameView.updateGameState({isRunning:true});
                 }, stepDurationMs);
             } else {
                 clearInterval(timerId);
             }
+            gameView.updateGameState({isRunning:newState});
         });
         gameView.onFieldSizeChange((width: number, height: number)=>{
             gameField.setSize(width,height);

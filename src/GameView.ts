@@ -75,13 +75,13 @@ export class GameView implements IGameView {
       ...this.state,
       ...state,
     };
-    if(typeof this.state.width === "number") {
+    if(typeof this.state.width === "number"&& !isNaN(this.state.width)) {
       let inputW=(this.el.querySelector(
           "input[type='number'].field-size.field-size--width"
       ) as HTMLInputElement)
       inputW.valueAsNumber = this.state.width as number;
     }
-    if(typeof this.state.height === "number") {
+    if(typeof this.state.height === "number" && !isNaN(this.state.height)) {
       let inputH=(this.el.querySelector(
           "input[type='number'].field-size.field-size--height"
       ) as HTMLInputElement)
