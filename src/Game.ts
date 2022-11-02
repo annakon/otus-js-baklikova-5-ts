@@ -23,11 +23,14 @@ export class Game implements IGame {
         });
         gameView.onGameStateChange((newState: boolean)=>{
             if(newState) {
+                gameField.nextGeneration();
+                gameView.updateGameField(gameField.getState());
                 this.timerId = setInterval(()=>{
                     gameField.nextGeneration();
                     gameView.updateGameField(gameField.getState());
                 }, stepDurationMs);
             } else {
+                gameView.updateGameField(gameField.getState());
                 clearInterval(this.timerId);
             }
             gameView.updateGameState({isRunning:newState});
