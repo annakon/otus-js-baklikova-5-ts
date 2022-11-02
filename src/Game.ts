@@ -13,11 +13,16 @@ export class Game implements IGame {
                 timerId = setInterval(()=>{
                     gameField.nextGeneration();
                     gameView.updateGameField(gameField.getState());
+                    gameView.updateGameState({isRunning:true});
                 }, stepDurationMs);
             } else {
                 clearInterval(timerId);
             }
         });
-        gameView.onFieldSizeChange(gameField.setSize);
+        gameView.onFieldSizeChange((width: number, height: number)=>{
+            gameField.setSize(width,height);
+            gameView.updateGameField(gameField.getState());
+            gameView.updateGameState({width: width,height: height});
+        });
     }
 }
