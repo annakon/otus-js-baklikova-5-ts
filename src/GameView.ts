@@ -26,7 +26,9 @@ export class GameView implements IGameView {
     this.onCC = (x: number, y: number) => void {};
     this.onGSC = (newState: boolean) => void {};
     this.onFSC = (width: number, height: number) => void {};
-    const gameControls = this.el.querySelector(".gameControls") as HTMLDivElement;
+    const gameControls = this.el.querySelector(
+      ".gameControls"
+    ) as HTMLDivElement;
     const buttonEl = document.createElement("button");
     buttonEl.innerHTML = "Play";
     buttonEl.className = "run-button run-button--stopped";
@@ -43,16 +45,10 @@ export class GameView implements IGameView {
     inputH.className = "field-size field-size--height";
     gameControls.appendChild(inputH);
     inputW.addEventListener("change", (ev) => {
-      this.onFSC(
-        inputW.valueAsNumber ,
-        inputH.valueAsNumber 
-      );
+      this.onFSC(inputW.valueAsNumber, inputH.valueAsNumber);
     });
     inputH.addEventListener("change", (ev) => {
-      this.onFSC(
-        inputW.valueAsNumber ,
-        inputH.valueAsNumber 
-      );
+      this.onFSC(inputW.valueAsNumber, inputH.valueAsNumber);
     });
   }
 
@@ -92,13 +88,13 @@ export class GameView implements IGameView {
       const inputW = this.el.querySelector(
         "input[type='number'].field-size.field-size--width"
       ) as HTMLInputElement;
-      inputW.valueAsNumber = this.state.width ;
+      inputW.valueAsNumber = this.state.width;
     }
     if (typeof this.state.height === "number" && !isNaN(this.state.height)) {
       const inputH = this.el.querySelector(
         "input[type='number'].field-size.field-size--height"
       ) as HTMLInputElement;
-      inputH.valueAsNumber = this.state.height ;
+      inputH.valueAsNumber = this.state.height;
     }
     const button = this.el.querySelector(".run-button") as HTMLButtonElement;
     if (state.isRunning) {

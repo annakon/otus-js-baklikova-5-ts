@@ -3,7 +3,8 @@ import { IGameField } from "./GameField";
 import { IGameView } from "./GameView";
 import { Cell } from "./types/Cell";
 
-const sleep = async (x: number) => await new Promise((resolve) => setTimeout(resolve, x));
+const sleep = async (x: number) =>
+  await new Promise((resolve) => setTimeout(resolve, x));
 
 describe("Game", () => {
   const stepDurationMs = 10;

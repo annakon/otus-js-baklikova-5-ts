@@ -3,7 +3,7 @@ import { GameView } from "./GameView";
 describe("GameView", () => {
   let el: HTMLElement;
   beforeEach(() => {
-    el = document.createElement("div") ;
+    el = document.createElement("div");
   });
   describe("public interface", () => {
     it("is a class", () => {
