@@ -1,10 +1,7 @@
-import { GameField, IGameField } from "./GameField";
-import { GameView, IGameView } from "./GameView";
-import { Cell } from "./types/Cell";
+import { IGameField } from "./GameField";
+import { IGameView } from "./GameView";
 
-export interface IGame {}
-
-export class Game implements IGame {
+export class Game {
   timerId?: NodeJS.Timer;
   constructor(
     gameField: IGameField,
