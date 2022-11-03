@@ -1,16 +1,16 @@
 import { Cell } from "./types/Cell";
 
 export interface IGameField {
-  getState(): Cell[][];
-  toggleCellState(x: number, y: number): void;
-  nextGeneration(): void;
-  setSize(width: number, height: number) : void;
+  getState: () => Cell[][];
+  toggleCellState: (x: number, y: number) => void;
+  nextGeneration: () => void;
+  setSize: (width: number, height: number) => void;
 }
 
 export class GameField implements IGameField {
-  field: Cell[][]=[];
-  constructor(width: number = 0, height: number = 1) {
-    let field = [];
+  field: Cell[][] = [];
+  constructor(width = 0, height = 1) {
+    const field = [];
     for (let row = 0; row < height; row++) {
       field[row] = [] as number[];
       for (let col = 0; col < width; col++) {
@@ -20,11 +20,11 @@ export class GameField implements IGameField {
     }
   }
 
-   getAliveCellCount(x: number,y: number): number{
-    let count: number=0;
-    for (let row = y-1; row <= y+1; row++) {
-      for (let col = x-1; col <= x+1; col++) {
-        if(!(col===x && row===y) && this.field[row]?.[col]===1) {
+  getAliveCellCount(x: number, y: number): number {
+    let count = 0;
+    for (let row = y - 1; row <= y + 1; row++) {
+      for (let col = x - 1; col <= x + 1; col++) {
+        if (!(col === x && row === y) && this.field[row]?.[col] === 1) {
           count++;
         }
       }
@@ -33,17 +33,16 @@ export class GameField implements IGameField {
   }
 
   nextGeneration() {
-
     for (let row = 0; row < this.field.length; row++) {
       for (let col = 0; col < this.field[row].length; col++) {
-        let ACount: number=this.getAliveCellCount(col,row);
+        const ACount: number = this.getAliveCellCount(col, row);
 
-        if(ACount===3 && this.field[row][col] === 0){
-          this.field[row][col]=1;
+        if (ACount === 3 && this.field[row][col] === 0) {
+          this.field[row][col] = 1;
         }
-        if(ACount !== 3 && ACount !== 2  && this.field[row][col] === 1) {
-            this.field[row][col]=0;
-          }
+        if (ACount !== 3 && ACount !== 2 && this.field[row][col] === 1) {
+          this.field[row][col] = 0;
+        }
       }
     }
   }
@@ -61,8 +60,7 @@ export class GameField implements IGameField {
   }
 
   setSize(width: number, height: number) {
-    let newField : Cell[][] = [];
-
+    const newField: Cell[][] = [];
 
     for (let row = 0; row < height; row++) {
       newField.push([]);
