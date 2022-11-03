@@ -21,6 +21,15 @@ module.exports = {
         project: ["./tsconfig.json"], // Specify it only for TypeScript files
       },
     },
+    {
+      files: ["src/**"],
+      plugins: ["jest"],
+      rules: {
+        // you should turn the original rule off *only* for test files
+        "@typescript-eslint/unbound-method": "off",
+        "jest/unbound-method": "error",
+      },
+    },
   ],
   plugins: ["jest", "@typescript-eslint"],
   parserOptions: {
