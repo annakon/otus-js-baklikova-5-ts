@@ -97,7 +97,7 @@ export class GameView implements IGameView {
       inputH.valueAsNumber = this.state.height;
     }
     const button = this.el.querySelector(".run-button") as HTMLButtonElement;
-    if (state.isRunning ?? false) {
+    if (this.state.isRunning ?? false) {
       button.className = "run-button run-button--runned";
       button.innerHTML = "Stop";
     } else {
