@@ -50,6 +50,10 @@ export class GameView implements IGameView {
     inputH.addEventListener("change", (ev) => {
       this.onFSC(inputW.valueAsNumber, inputH.valueAsNumber);
     });
+    const inputR = document.createElement("input");
+    inputR.type = "range";
+    inputR.className = "field-range";
+    gameControls.appendChild(inputR);
   }
 
   updateGameField(field: Cell[][]) {

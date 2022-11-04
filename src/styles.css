@@ -18,3 +18,15 @@ table {
 .cell--alive {
   background-color: darkcyan;
 }
+
+.gameControls {
+  display: flex;
+  flex-wrap: wrap;
+  width: 403px;
+  row-gap: 5px;
+  column-gap: 10px;
+}
+
+.field-range {
+  width: 100%;
+}
