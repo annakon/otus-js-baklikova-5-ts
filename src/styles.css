@@ -22,7 +22,7 @@ table {
 .gameControls {
   display: flex;
   flex-wrap: wrap;
-  width: 403px;
+  width: 415px;
   row-gap: 5px;
   column-gap: 10px;
 }

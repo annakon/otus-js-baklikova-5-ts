@@ -7,10 +7,12 @@ export interface IGameView {
     width?: number;
     height?: number;
     isRunning?: boolean;
+    stepDurationMs?: number;
   }) => void;
   onCellClick: (cb: (x: number, y: number) => void) => void;
   onGameStateChange: (cb: (newState: boolean) => void) => void;
   onFieldSizeChange: (cb: (width: number, height: number) => void) => void;
+  getDuration: ()=>number;
 }
 
 export class GameView implements IGameView {
@@ -18,7 +20,7 @@ export class GameView implements IGameView {
   onCC: (x: number, y: number) => void;
   onGSC: (newState: boolean) => void;
   onFSC: (width: number, height: number) => void;
-  state: { width?: number; height?: number; isRunning?: boolean } = {};
+  state: { width?: number; height?: number; isRunning?: boolean; stepDurationMs?: number } = {};
   constructor(element: HTMLElement) {
     this.el = element;
     this.el.innerHTML =
@@ -54,6 +56,9 @@ export class GameView implements IGameView {
     inputR.type = "range";
     inputR.className = "field-range";
     gameControls.appendChild(inputR);
+    inputR.addEventListener("change", (ev) => {
+      this.state.stepDurationMs=inputR.valueAsNumber;
+    });
   }
 
   updateGameField(field: Cell[][]) {
@@ -83,6 +88,7 @@ export class GameView implements IGameView {
     width?: number;
     height?: number;
     isRunning?: boolean;
+    stepDurationMs?: number;
   }) {
     this.state = {
       ...this.state,
@@ -100,13 +106,21 @@ export class GameView implements IGameView {
       ) as HTMLInputElement;
       inputH.valueAsNumber = this.state.height;
     }
+    const inputR = this.el.querySelector(
+        "input[type='range']"
+    ) as HTMLInputElement;
+    if (typeof this.state.stepDurationMs === "number" && !isNaN(this.state.stepDurationMs)) {
+      inputR.max = String(this.state.stepDurationMs*2);
+    }
     const button = this.el.querySelector(".run-button") as HTMLButtonElement;
     if (this.state.isRunning ?? false) {
       button.className = "run-button run-button--runned";
       button.innerHTML = "Stop";
+      inputR.disabled=true;
     } else {
       button.className = "run-button run-button--stopped";
       button.innerHTML = "Play";
+      inputR.disabled=false;
     }
   }
 
@@ -120,5 +134,9 @@ export class GameView implements IGameView {
 
   onFieldSizeChange(cb: (width: number, height: number) => void) {
     this.onFSC = cb;
+  }
+
+  getDuration(){
+    return this.state.stepDurationMs as number;
   }
 }

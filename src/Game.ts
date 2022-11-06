@@ -6,7 +6,7 @@ export class Game {
   constructor(
     gameField: IGameField,
     gameView: IGameView,
-    stepDurationMs?: number
+    stepDurationMs: number=1000
   ) {
     const state = gameField.getState();
     gameField.setSize(state[0].length, state.length);
@@ -15,6 +15,7 @@ export class Game {
       isRunning: false,
       width: state[0].length,
       height: state.length,
+      stepDurationMs: stepDurationMs
     });
 
     gameView.onCellClick((x: number, y: number) => {
@@ -28,7 +29,7 @@ export class Game {
         this.timerId = setInterval(() => {
           gameField.nextGeneration();
           gameView.updateGameField(gameField.getState());
-        }, stepDurationMs);
+        }, gameView.getDuration());
       } else {
         gameView.updateGameField(gameField.getState());
         clearInterval(this.timerId);
