@@ -27,8 +27,12 @@ export class Game {
         gameField.nextGeneration();
         gameView.updateGameField(gameField.getState());
         this.timerId = setInterval(() => {
-          gameField.nextGeneration();
-          gameView.updateGameField(gameField.getState());
+          if(gameField.nextGeneration()) {
+            gameView.updateGameField(gameField.getState());
+          } else {
+            clearInterval(this.timerId);
+            gameView.updateGameState({ isRunning: false });
+          }
         }, gameView.getDuration());
       } else {
         gameView.updateGameField(gameField.getState());

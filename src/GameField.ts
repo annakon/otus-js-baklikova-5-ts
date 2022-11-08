@@ -3,7 +3,7 @@ import { Cell } from "./types/Cell";
 export interface IGameField {
   getState: () => Cell[][];
   toggleCellState: (x: number, y: number) => void;
-  nextGeneration: () => void;
+  nextGeneration: () => boolean;
   setSize: (width: number, height: number) => void;
 }
 
@@ -33,18 +33,22 @@ export class GameField implements IGameField {
   }
 
   nextGeneration() {
+    let stateChange=false;
     for (let row = 0; row < this.field.length; row++) {
       for (let col = 0; col < this.field[row].length; col++) {
         const ACount: number = this.getAliveCellCount(col, row);
 
         if (ACount === 3 && this.field[row][col] === 0) {
+          if(this.field[row][col]===0) stateChange=true;
           this.field[row][col] = 1;
         }
         if (ACount !== 3 && ACount !== 2 && this.field[row][col] === 1) {
+          if(this.field[row][col]===1) stateChange=true;
           this.field[row][col] = 0;
         }
       }
     }
+    return stateChange;
   }
 
   getState() {

@@ -24,6 +24,7 @@ describe("Game", () => {
 
   const getGameView = (): IGameView => ({
     updateGameField: jest.fn(),
+    getDuration: jest.fn(),
     updateGameState: jest.fn(),
     onCellClick: jest.fn((cb) => {
       onCellClick = jest.fn(cb);
