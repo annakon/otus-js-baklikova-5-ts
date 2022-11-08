@@ -109,8 +109,9 @@ export class GameView implements IGameView {
     const inputR = this.el.querySelector(
         "input[type='range']"
     ) as HTMLInputElement;
-    if (typeof this.state.stepDurationMs === "number" && !isNaN(this.state.stepDurationMs)) {
-      inputR.max = String(this.state.stepDurationMs*2);
+    if (typeof state.stepDurationMs === "number" && !isNaN(state.stepDurationMs)) {
+      inputR.max = String(state.stepDurationMs*2);
+      inputR.valueAsNumber= state.stepDurationMs;
     }
     const button = this.el.querySelector(".run-button") as HTMLButtonElement;
     if (this.state.isRunning ?? false) {
