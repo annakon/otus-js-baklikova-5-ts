@@ -60,12 +60,12 @@ export class GameView implements IGameView {
       this.onFieldSizeChangeCB(inputW.valueAsNumber, inputH.valueAsNumber);
     });
 
-    const inputR = document.createElement("input");
-    inputR.type = "range";
-    inputR.className = "field-range";
-    gameControls.appendChild(inputR);
-    inputR.addEventListener("change", (ev) => {
-      this.state.stepDurationMs=inputR.valueAsNumber;
+    const inputRangeSpeed = document.createElement("input");
+    inputRangeSpeed.type = "range";
+    inputRangeSpeed.className = "field-range";
+    gameControls.appendChild(inputRangeSpeed);
+    inputRangeSpeed.addEventListener("change", (ev) => {
+      this.state.stepDurationMs=inputRangeSpeed.valueAsNumber;
     });
   }
 
@@ -110,22 +110,22 @@ export class GameView implements IGameView {
       ) as HTMLInputElement;
       inputH.valueAsNumber = this.state.height;
     }
-    const inputR = this.el.querySelector(
+    const inputRangeSpeed = this.el.querySelector(
         "input[type='range']"
     ) as HTMLInputElement;
     if (typeof state.stepDurationMs === "number" && !isNaN(state.stepDurationMs)) {
-      inputR.max = String(state.stepDurationMs*2);
-      inputR.valueAsNumber= state.stepDurationMs;
+      inputRangeSpeed.max = String(state.stepDurationMs*2);
+      inputRangeSpeed.valueAsNumber= state.stepDurationMs;
     }
     const button = this.el.querySelector(".run-button") as HTMLButtonElement;
     if (this.state.isRunning ?? false) {
       button.className = "run-button run-button--runned";
       button.innerHTML = "Stop";
-      inputR.disabled=true;
+      inputRangeSpeed.disabled=true;
     } else {
       button.className = "run-button run-button--stopped";
       button.innerHTML = "Play";
-      inputR.disabled=false;
+      inputRangeSpeed.disabled=false;
     }
   }
 
