@@ -1,5 +1,4 @@
 import { Cell } from "./types/Cell";
-import { IGameField } from "./GameField";
 
 export interface IGameView {
   updateGameField: (field: Cell[][]) => void;
