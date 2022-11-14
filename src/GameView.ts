@@ -43,22 +43,20 @@ export class GameView implements IGameView {
     });
     gameControls.appendChild(buttonEl);
 
-    const inputW = document.createElement("input");
-    inputW.type = "number";
-    inputW.className = "field-size field-size--width";
-    gameControls.appendChild(inputW);
+    let input: HTMLInputElement[]=[document.createElement("input"),document.createElement("input")];
 
-    const inputH = document.createElement("input");
-    inputH.type = "number";
-    inputH.className = "field-size field-size--height";
-    gameControls.appendChild(inputH);
-
-    inputW.addEventListener("change", (ev) => {
-      this.onFieldSizeChangeCB(inputW.valueAsNumber, inputH.valueAsNumber);
-    });
-    inputH.addEventListener("change", (ev) => {
-      this.onFieldSizeChangeCB(inputW.valueAsNumber, inputH.valueAsNumber);
-    });
+    for(let i=0;i<2;i++){
+      input[i].type = "number";
+      if(i===0) {
+        input[i].className = "field-size field-size--width";
+      } else {
+        input[i].className =  "field-size field-size--height";
+      }
+      gameControls.appendChild(input[i]);
+      input[i].addEventListener("change", (ev) => {
+        this.onFieldSizeChangeCB(input[0].valueAsNumber, input[1].valueAsNumber);
+      });
+    }
 
     const inputRangeSpeed = document.createElement("input");
     inputRangeSpeed.type = "range";
