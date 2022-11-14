@@ -1,13 +1,15 @@
 import { Cell } from "./types/Cell";
 
+type viewState={
+  width?: number;
+  height?: number;
+  isRunning?: boolean;
+  stepDurationMs?: number
+}
+
 export interface IGameView {
   updateGameField: (field: Cell[][]) => void;
-  updateGameState: (state: {
-    width?: number;
-    height?: number;
-    isRunning?: boolean;
-    stepDurationMs?: number;
-  }) => void;
+  updateGameState: (state: viewState) => void;
   onCellClick: (cb: (x: number, y: number) => void) => void;
   onGameStateChange: (cb: (newState: boolean) => void) => void;
   onFieldSizeChange: (cb: (width: number, height: number) => void) => void;
@@ -19,7 +21,7 @@ export class GameView implements IGameView {
   onCC: (x: number, y: number) => void;
   onGSC: (newState: boolean) => void;
   onFSC: (width: number, height: number) => void;
-  state: { width?: number; height?: number; isRunning?: boolean; stepDurationMs?: number } = {};
+  state: viewState = {};
   constructor(element: HTMLElement) {
     this.el = element;
     this.el.innerHTML =
@@ -83,12 +85,7 @@ export class GameView implements IGameView {
     }
   }
 
-  updateGameState(state: {
-    width?: number;
-    height?: number;
-    isRunning?: boolean;
-    stepDurationMs?: number;
-  }) {
+  updateGameState(state: viewState) {
     this.state = {
       ...this.state,
       ...state,
