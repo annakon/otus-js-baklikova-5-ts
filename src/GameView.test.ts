@@ -8,17 +8,17 @@ describe("GameView", () => {
   describe("public interface", () => {
     it("is a class", () => {
       expect(GameView).toBeInstanceOf(Function);
-      expect(new GameView(el)).toBeInstanceOf(GameView);
+      expect(new GameView(el,{width:5,height:5,isRunning:false,stepDurationMs:10})).toBeInstanceOf(GameView);
     });
 
     it("renders some inital markup on construction", () => {
-      new GameView(el);
+      new GameView(el,{width:5,height:5,isRunning:false,stepDurationMs:10});
       expect(el.querySelector(".gameField")).not.toBeNull();
       expect(el.querySelector(".gameControls")).not.toBeNull();
     });
 
     it("has public methods", () => {
-      const gameView = new GameView(el);
+      const gameView = new GameView(el,{width:5,height:5,isRunning:false,stepDurationMs:10});
       expect(gameView.updateGameField).toBeInstanceOf(Function);
       expect(gameView.updateGameState).toBeInstanceOf(Function);
       expect(gameView.onCellClick).toBeInstanceOf(Function);
@@ -30,7 +30,7 @@ describe("GameView", () => {
   describe("functional interface", () => {
     let gameView: GameView;
     beforeEach(() => {
-      gameView = new GameView(el);
+      gameView = new GameView(el,{width:5,height:5,isRunning:false,stepDurationMs:10});
     });
     it("renders field from .updateGameField", () => {
       gameView.updateGameField([
