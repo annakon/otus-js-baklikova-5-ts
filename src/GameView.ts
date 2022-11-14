@@ -1,10 +1,10 @@
 import { Cell } from "./types/Cell";
 
 type viewState={
-  width?: number;
-  height?: number;
-  isRunning?: boolean;
-  stepDurationMs?: number
+  width: number;
+  height: number;
+  isRunning: boolean;
+  stepDurationMs: number
 }
 
 export interface IGameView {
@@ -21,9 +21,10 @@ export class GameView implements IGameView {
   onCellClickCB: (x: number, y: number) => void;
   onGameStateChangeCB: (newState: boolean) => void;
   onFieldSizeChangeCB: (width: number, height: number) => void;
-  state: viewState = {};
+  state: viewState;
 
-  constructor(element: HTMLElement) {
+  constructor(element: HTMLElement, state: viewState) {
+    this.state=state;
     this.el = element;
     this.el.innerHTML =
       "<div class='gameField'></div><div class='gameControls'></div>";
@@ -91,23 +92,28 @@ export class GameView implements IGameView {
     }
   }
 
-  updateGameState(state: viewState) {
+  updateGameState(state: {
+    width?: number;
+    height?: number;
+    isRunning?: boolean;
+    stepDurationMs?: number
+  }) {
     this.state = {
       ...this.state,
       ...state,
     };
-    if (typeof this.state.width === "number" && !isNaN(this.state.width)) {
+
       const inputW = this.el.querySelector(
-        "input[type='number'].field-size.field-size--width"
+        ".field-size--width"
       ) as HTMLInputElement;
       inputW.valueAsNumber = this.state.width;
-    }
-    if (typeof this.state.height === "number" && !isNaN(this.state.height)) {
+
+
       const inputH = this.el.querySelector(
-        "input[type='number'].field-size.field-size--height"
+        ".field-size--height"
       ) as HTMLInputElement;
       inputH.valueAsNumber = this.state.height;
-    }
+
     const inputRangeSpeed = this.el.querySelector(
         "input[type='range']"
     ) as HTMLInputElement;

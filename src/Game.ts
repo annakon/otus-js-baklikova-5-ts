@@ -1,13 +1,14 @@
-import { IGameField } from "./GameField";
-import { IGameView } from "./GameView";
+import { GameField } from "./GameField";
+import { GameView } from "./GameView";
 
 export class Game {
   timerId?: NodeJS.Timer;
   constructor(
-    gameField: IGameField,
-    gameView: IGameView,
+      el: HTMLElement,width: number, height: number,
     stepDurationMs: number=1000
   ) {
+    const gameView = new GameView(el,{width,height,isRunning:false,stepDurationMs});
+    const gameField = new GameField(5, 5);
     const state = gameField.getState();
     gameField.setSize(state[0].length, state.length);
     gameView.updateGameField(state);
