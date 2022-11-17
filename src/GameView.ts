@@ -8,30 +8,27 @@ type viewState={
 }
 
 export interface IGameView {
-  updateGameField: (field: Cell[][]) => void;
-  updateGameState: (state: viewState) => void;
-  onCellClick: (cb: (x: number, y: number) => void) => void;
-  onGameStateChange: (cb: (newState: boolean) => void) => void;
-  onFieldSizeChange: (cb: (width: number, height: number) => void) => void;
+  updateGameField: (field: Cell[][], onCellClick: (x: number, y: number) => void) => void;
+  updateGameState: (state: {
+    width?: number;
+    height?: number;
+    isRunning?: boolean;
+    stepDurationMs?: number
+  }) => void;
   getDuration: ()=>number;
 }
 
 export class GameView implements IGameView {
   el: HTMLElement;
-  onCellClickCB: (x: number, y: number) => void;
-  onGameStateChangeCB: (newState: boolean) => void;
-  onFieldSizeChangeCB: (width: number, height: number) => void;
   state: viewState;
 
-  constructor(element: HTMLElement, state: viewState) {
+  constructor(element: HTMLElement, state: viewState,
+     onGameStateChange: (newState: boolean) => void,
+     onFieldSizeChange: (width: number, height: number)  => void) {
     this.state=state;
     this.el = element;
     this.el.innerHTML =
       "<div class='gameField'></div><div class='gameControls'></div>";
-
-    this.onCellClickCB = (x: number, y: number) => void {};
-    this.onGameStateChangeCB = (newState: boolean) => void {};
-    this.onFieldSizeChangeCB = (width: number, height: number) => void {};
 
     const gameControls = this.el.querySelector(
       ".gameControls"
@@ -40,7 +37,7 @@ export class GameView implements IGameView {
     buttonEl.innerHTML = "Play";
     buttonEl.className = "run-button run-button--stopped";
     buttonEl.addEventListener("click", (ev) => {
-      this.onGameStateChangeCB(buttonEl.innerHTML === "Play");
+      onGameStateChange(buttonEl.innerHTML === "Play");
     });
     gameControls.appendChild(buttonEl);
 
@@ -55,7 +52,7 @@ export class GameView implements IGameView {
       }
       gameControls.appendChild(input[i]);
       input[i].addEventListener("change", (ev) => {
-        this.onFieldSizeChangeCB(input[0].valueAsNumber, input[1].valueAsNumber);
+        onFieldSizeChange(input[0].valueAsNumber, input[1].valueAsNumber);
       });
     }
 
@@ -68,7 +65,7 @@ export class GameView implements IGameView {
     });
   }
 
-  updateGameField(field: Cell[][]) {
+  updateGameField(field: Cell[][], onCellClick: (x: number, y: number) => void) {
     const gameField = this.el.querySelector(".gameField") as HTMLDivElement;
     gameField.innerHTML = "";
     const tableEl = document.createElement("table");
@@ -85,7 +82,7 @@ export class GameView implements IGameView {
           td.className = "cell cell--dead";
         }
         td.addEventListener("click", (ev) => {
-          this.onCellClickCB(col, row);
+          onCellClick(col, row);
         });
         tr.appendChild(td);
       }
@@ -131,18 +128,6 @@ export class GameView implements IGameView {
       button.innerHTML = "Play";
       inputRangeSpeed.disabled=false;
     }
-  }
-
-  onCellClick(cb: (x: number, y: number) => void) {
-    this.onCellClickCB = cb;
-  }
-
-  onGameStateChange(cb: (newState: boolean) => void) {
-    this.onGameStateChangeCB = cb;
-  }
-
-  onFieldSizeChange(cb: (width: number, height: number) => void) {
-    this.onFieldSizeChangeCB = cb;
   }
 
   getDuration(){

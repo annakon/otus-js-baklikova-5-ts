@@ -2,66 +2,64 @@ import { GameView } from "./GameView";
 
 describe("GameView", () => {
   let el: HTMLElement;
+  let onCellClick = jest.fn();
+  let onGameStateChange = jest.fn();
+  let onFieldSizeChange = jest.fn();
   beforeEach(() => {
     el = document.createElement("div");
   });
   describe("public interface", () => {
     it("is a class", () => {
       expect(GameView).toBeInstanceOf(Function);
-      expect(new GameView(el,{width:5,height:5,isRunning:false,stepDurationMs:10})).toBeInstanceOf(GameView);
+      expect(new GameView(el,{width:5,height:5,isRunning:false,stepDurationMs:10},onGameStateChange, onFieldSizeChange )).toBeInstanceOf(GameView);
     });
 
     it("renders some inital markup on construction", () => {
-      new GameView(el,{width:5,height:5,isRunning:false,stepDurationMs:10});
+      new GameView(el,{width:5,height:5,isRunning:false,stepDurationMs:10},onGameStateChange, onFieldSizeChange);
       expect(el.querySelector(".gameField")).not.toBeNull();
       expect(el.querySelector(".gameControls")).not.toBeNull();
     });
 
     it("has public methods", () => {
-      const gameView = new GameView(el,{width:5,height:5,isRunning:false,stepDurationMs:10});
+      const gameView = new GameView(el,{width:5,height:5,isRunning:false,stepDurationMs:10},onGameStateChange, onFieldSizeChange);
       expect(gameView.updateGameField).toBeInstanceOf(Function);
       expect(gameView.updateGameState).toBeInstanceOf(Function);
-      expect(gameView.onCellClick).toBeInstanceOf(Function);
-      expect(gameView.onGameStateChange).toBeInstanceOf(Function);
-      expect(gameView.onFieldSizeChange).toBeInstanceOf(Function);
     });
   });
 
   describe("functional interface", () => {
     let gameView: GameView;
     beforeEach(() => {
-      gameView = new GameView(el,{width:5,height:5,isRunning:false,stepDurationMs:10});
+      gameView = new GameView(el,{width:5,height:5,isRunning:false,stepDurationMs:10},onGameStateChange, onFieldSizeChange);
     });
     it("renders field from .updateGameField", () => {
       gameView.updateGameField([
         [0, 1],
         [1, 0],
-      ]);
+      ],onCellClick);
       expect(el.querySelectorAll(".cell").length).toBe(4);
       expect(el.querySelectorAll(".cell.cell--alive").length).toBe(2);
       expect(el.querySelectorAll(".cell.cell--dead").length).toBe(2);
       gameView.updateGameField([
         [0, 0],
         [1, 0],
-      ]);
+      ],onCellClick);
       expect(el.querySelectorAll(".cell").length).toBe(4);
       expect(el.querySelectorAll(".cell.cell--alive").length).toBe(1);
       expect(el.querySelectorAll(".cell.cell--dead").length).toBe(3);
       gameView.updateGameField([
         [0, 0, 1],
         [1, 0, 1],
-      ]);
+      ],onCellClick);
       expect(el.querySelectorAll(".cell").length).toBe(6);
       expect(el.querySelectorAll(".cell.cell--alive").length).toBe(3);
       expect(el.querySelectorAll(".cell.cell--dead").length).toBe(3);
     });
     it("calls funciton from .onCellClick on field interaction", () => {
-      const onCellClick = jest.fn();
-      gameView.onCellClick(onCellClick);
       gameView.updateGameField([
         [0, 0],
         [1, 0],
-      ]);
+      ],onCellClick);
       (el.querySelector(".cell.cell--alive") as HTMLElement).dispatchEvent(
         new Event("click", {
           bubbles: true,
@@ -136,8 +134,6 @@ describe("GameView", () => {
       ).toBe(6);
     });
     it("calls function from .onGameStateChange on control interaction", () => {
-      const onGameStateChange = jest.fn();
-      gameView.onGameStateChange(onGameStateChange);
       gameView.updateGameState({ isRunning: true, width: 2, height: 1 });
       (
         el.querySelector(".run-button.run-button--runned") as HTMLElement
@@ -158,8 +154,6 @@ describe("GameView", () => {
       expect(onGameStateChange).toHaveBeenCalledWith(true);
     });
     it("calls onFieldSizeChange on field size change interaction", () => {
-      const onFieldSizeChange = jest.fn();
-      gameView.onFieldSizeChange(onFieldSizeChange);
 
       [
         [33, 66],
