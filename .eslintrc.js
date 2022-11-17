@@ -43,6 +43,7 @@ module.exports = {
     "@typescript-eslint/prefer-optional-chain": "off",
     "no-new": "off",
     "no-void": "off",
+    "prefer-const": "off",
   },
   parser: "@typescript-eslint/parser",
 };

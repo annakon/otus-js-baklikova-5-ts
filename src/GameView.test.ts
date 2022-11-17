@@ -2,26 +2,43 @@ import { GameView } from "./GameView";
 
 describe("GameView", () => {
   let el: HTMLElement;
-  let onCellClick = jest.fn();
-  let onGameStateChange = jest.fn();
-  let onFieldSizeChange = jest.fn();
+  const onCellClick = jest.fn();
+  const onGameStateChange = jest.fn();
+  const onFieldSizeChange = jest.fn();
   beforeEach(() => {
     el = document.createElement("div");
   });
   describe("public interface", () => {
     it("is a class", () => {
       expect(GameView).toBeInstanceOf(Function);
-      expect(new GameView(el,{width:5,height:5,isRunning:false,stepDurationMs:10},onGameStateChange, onFieldSizeChange )).toBeInstanceOf(GameView);
+      expect(
+        new GameView(
+          el,
+          { width: 5, height: 5, isRunning: false, stepDurationMs: 10 },
+          onGameStateChange,
+          onFieldSizeChange
+        )
+      ).toBeInstanceOf(GameView);
     });
 
     it("renders some inital markup on construction", () => {
-      new GameView(el,{width:5,height:5,isRunning:false,stepDurationMs:10},onGameStateChange, onFieldSizeChange);
+      new GameView(
+        el,
+        { width: 5, height: 5, isRunning: false, stepDurationMs: 10 },
+        onGameStateChange,
+        onFieldSizeChange
+      );
       expect(el.querySelector(".gameField")).not.toBeNull();
       expect(el.querySelector(".gameControls")).not.toBeNull();
     });
 
     it("has public methods", () => {
-      const gameView = new GameView(el,{width:5,height:5,isRunning:false,stepDurationMs:10},onGameStateChange, onFieldSizeChange);
+      const gameView = new GameView(
+        el,
+        { width: 5, height: 5, isRunning: false, stepDurationMs: 10 },
+        onGameStateChange,
+        onFieldSizeChange
+      );
       expect(gameView.updateGameField).toBeInstanceOf(Function);
       expect(gameView.updateGameState).toBeInstanceOf(Function);
     });
@@ -30,36 +47,53 @@ describe("GameView", () => {
   describe("functional interface", () => {
     let gameView: GameView;
     beforeEach(() => {
-      gameView = new GameView(el,{width:5,height:5,isRunning:false,stepDurationMs:10},onGameStateChange, onFieldSizeChange);
+      gameView = new GameView(
+        el,
+        { width: 5, height: 5, isRunning: false, stepDurationMs: 10 },
+        onGameStateChange,
+        onFieldSizeChange
+      );
     });
     it("renders field from .updateGameField", () => {
-      gameView.updateGameField([
-        [0, 1],
-        [1, 0],
-      ],onCellClick);
+      gameView.updateGameField(
+        [
+          [0, 1],
+          [1, 0],
+        ],
+        onCellClick
+      );
       expect(el.querySelectorAll(".cell").length).toBe(4);
       expect(el.querySelectorAll(".cell.cell--alive").length).toBe(2);
       expect(el.querySelectorAll(".cell.cell--dead").length).toBe(2);
-      gameView.updateGameField([
-        [0, 0],
-        [1, 0],
-      ],onCellClick);
+      gameView.updateGameField(
+        [
+          [0, 0],
+          [1, 0],
+        ],
+        onCellClick
+      );
       expect(el.querySelectorAll(".cell").length).toBe(4);
       expect(el.querySelectorAll(".cell.cell--alive").length).toBe(1);
       expect(el.querySelectorAll(".cell.cell--dead").length).toBe(3);
-      gameView.updateGameField([
-        [0, 0, 1],
-        [1, 0, 1],
-      ],onCellClick);
+      gameView.updateGameField(
+        [
+          [0, 0, 1],
+          [1, 0, 1],
+        ],
+        onCellClick
+      );
       expect(el.querySelectorAll(".cell").length).toBe(6);
       expect(el.querySelectorAll(".cell.cell--alive").length).toBe(3);
       expect(el.querySelectorAll(".cell.cell--dead").length).toBe(3);
     });
     it("calls funciton from .onCellClick on field interaction", () => {
-      gameView.updateGameField([
-        [0, 0],
-        [1, 0],
-      ],onCellClick);
+      gameView.updateGameField(
+        [
+          [0, 0],
+          [1, 0],
+        ],
+        onCellClick
+      );
       (el.querySelector(".cell.cell--alive") as HTMLElement).dispatchEvent(
         new Event("click", {
           bubbles: true,
@@ -154,7 +188,6 @@ describe("GameView", () => {
       expect(onGameStateChange).toHaveBeenCalledWith(true);
     });
     it("calls onFieldSizeChange on field size change interaction", () => {
-
       [
         [33, 66],
         [22, 12],
