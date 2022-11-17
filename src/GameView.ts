@@ -145,6 +145,6 @@ export class GameView implements IGameView {
   }
 
   getDuration() {
-    return this.state.stepDurationMs ;
+    return this.state.stepDurationMs;
   }
 }
